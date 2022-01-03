@@ -1,0 +1,98 @@
+--Project: SQL Project in Rent_A_Film
+
+--1.We want to run an Email Campaigns for customers of Store 2 (First, Last name,
+and Email address of customers from Store 2)
+Select First_name,Last_name,email from customer inner join address on customer.address_id=address.address_id 
+inner join store on address.address_id=store.address_id where store.address_id='2'; 
+
+--2.List of the movies with a rental rate of 0.99$
+Select * from film where rental_rate='0.99';
+
+--3.Your objective is to show the rental rate and how many movies are in each rental
+rate categories
+select count(*)as Number_of_movies,rental_rate from film group by rental_rate;
+mysql> select count(*)as Number_of_movies,rental_rate from film group by rental_rate;
+
+--4.Which rating do we have the most films in?
+Ans: select max(rating) from film;
+
+--5.Which rating is most prevalent in each store?
+Select max(rating) as maximum_rating,store_id from film inner join inventory on film.film_id =inventory.film_id;
+
+--6. We want to mail the customers about the upcoming promotion
+
+--7.List of films by Film Name, Category, Language
+Select film.title as Film_title,Category.name as Category_type,language.name as film_language from 
+film inner join category on film.category_id=category.category_id
+inner join language  on language.language_id=film.language_id;
+
+--8.How many times each movie has been rented out?
+
+--9. What is the Revenue per Movie?
+select film.title as movie_name,rental_rate from film order by film_id;
+
+--10.Most Spending Customer so that we can send him/her rewards or debate points.
+select first_name,Last_name,email,sum(amount) as Total_amount  from customer
+inner join payment on payment.customer_id=customer.customer_id group by 1 order by 4 desc;
+
+
+--11.What Store has historically brought the most revenue?
+12.How many rentals do we have for each month?
+select rental_date,rental_id from rental order by rental_date;
+
+
+13.Rentals per Month (such Jan => How much, etc)
+select month(rental_date) as Month,count(rental_id) as Rentals_per_Month from rental group by month;
+
+
+14.Which date the first movie was rented out?
+select * from (select * from rental order by rental_date desc) Result limit 1;
+
+
+15.Which date the last movie was rented out?
+select * from (select * from rental order by rental_date desc) Result limit 1;
+
+
+
+17.What is the Last Rental Date of every customer?
+select distinct customer_id,rental_date as 'Last_Rental_Date' from rental group by customer_id order by customer_id asc;
+
+
+24.Active User where active = 1
+select customer_id,first_name,last_name,active as 'Active Customer' from customer where active='1';
+
+
+25.Reward Users: who has rented at least 30 times
+select customer_id,first_name,last_name,
+from customer inner join rental on
+customer.customer_id = rental.customer_id
+where count(inventory_id)> '30'; 
+
+-------------Work in Progress -----------
+
+
+16.For each movie, when was the first time and last time it was rented out?
+-ranking 
+
+
+17.What is the Last Rental Date of every customer?
+18.What is our Revenue Per Month?
+19.How many distinct Renters do we have per month?
+20.Show the Number of Distinct Film Rented Each Month
+21.Number of Rentals in Comedy, Sports, and Family
+22.Users who have been rented at least 3 times
+
+
+23.How much revenue has one single store made over PG13 and R-rated films?
+24.Active User where active = 1
+25.Reward Users: who has rented at least 30 times
+26.Reward Users who are also active
+27.All Rewards Users with Phon
+
+
+
+
+
+
+
+
